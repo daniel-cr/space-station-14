@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -20,7 +20,7 @@ namespace Content.Shared.Maps
         /// <summary>
         ///     Attempts to get the turf at map indices with grid id or null if no such turf is found.
         /// </summary>
-        public static TileRef GetTileRef(this Vector2i Vector2i, GridId gridId, IMapManager? mapManager = null)
+        public static TileRef GetTileRef(this Vector2i vector2i, GridId gridId, IMapManager? mapManager = null)
         {
             if (!gridId.IsValid())
                 return default;
@@ -30,7 +30,7 @@ namespace Content.Shared.Maps
             if (!mapManager.TryGetGrid(gridId, out var grid))
                 return default;
 
-            if (!grid.TryGetTileRef(Vector2i, out var tile))
+            if (!grid.TryGetTileRef(vector2i, out var tile))
                 return default;
 
             return tile;
@@ -134,9 +134,9 @@ namespace Content.Shared.Maps
 
             var mapGrid = mapManager.GetGrid(tileRef.GridIndex);
 
-            var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
+            var plating = tileDefinitionManager.GetBaseTurfTileDef(tileDef.TileId);
 
-             mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
+            mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
 
              var half = mapGrid.TileSize / 2f;
 

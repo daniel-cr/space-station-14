@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Server.GameObjects.Components.Mobs;
 using Content.Shared.GameObjects.EntitySystems;
@@ -82,20 +82,14 @@ namespace Content.Server.Explosions
                 foreach (var tile in tiles)
                 {
                     var tileLoc = mapGrid.GridTileToLocal(tile.GridIndices);
-                    var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
-                    var baseTurfs = tileDef.BaseTurfs;
-                    if (baseTurfs.Count == 0)
-                    {
-                        continue;
-                    }
 
                     if (!tileLoc.TryDistance(entityManager, coords, out var distance))
                     {
                         continue;
                     }
 
-                    var zeroTile = new Tile(tileDefinitionManager[baseTurfs[0]].TileId);
-                    var previousTile = new Tile(tileDefinitionManager[baseTurfs[^1]].TileId);
+                    var zeroTile = new Tile(tileDefinitionManager.GetBaseTurfId(tile.Tile.TypeId, 2));
+                    var previousTile = new Tile(tileDefinitionManager.GetBaseTurfId(tile.Tile.TypeId));
 
                     switch (distance)
                     {

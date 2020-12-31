@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Robust.Shared.Interfaces.Map;
@@ -19,7 +19,7 @@ namespace Content.Shared.Maps
         public string DisplayName { get; private set; }
         public string SpriteName { get; private set; }
         public bool IsSubFloor { get; private set; }
-        public List<string> BaseTurfs { get; private set; }
+        public string BaseTurf { get; private set; }
         public bool CanCrowbar { get; private set; }
         public string FootstepSounds { get; private set; }
         public float Friction { get; set; }
@@ -43,10 +43,14 @@ namespace Content.Shared.Maps
                 IsSubFloor = node.AsBool();
             }
 
-            if (mapping.TryGetNode("base_turfs", out YamlSequenceNode baseTurfNode))
-                BaseTurfs = baseTurfNode.Select(i => i.ToString()).ToList();
+            if (mapping.TryGetNode("base_turf", out node))
+            {
+                BaseTurf = node.AsString();
+            }
             else
-                BaseTurfs = new List<string>();
+            {
+                BaseTurf = "space";
+            }
 
             if (mapping.TryGetNode("is_space", out node))
             {

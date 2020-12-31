@@ -1,4 +1,4 @@
-﻿using Content.Server.GameObjects.Components.Stack;
+using Content.Server.GameObjects.Components.Stack;
 using Content.Shared.Audio;
 using Content.Shared.Interfaces.GameObjects.Components;
 using Content.Shared.Maps;
@@ -37,19 +37,6 @@ namespace Content.Server.GameObjects.Components.Items
             Owner.EnsureComponent<StackComponent>();
         }
 
-        private bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
-        {
-            foreach (var tileBaseTurf in tileDef.BaseTurfs)
-            {
-                if (baseTurf == tileBaseTurf)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, float offset = 0)
         {
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId));
@@ -67,20 +54,18 @@ namespace Content.Server.GameObjects.Components.Items
             mapManager.TryGetGrid(location.GetGridId(Owner.EntityManager), out var mapGrid);
             foreach (var currentTile in _outputTiles)
             {
-                var currentTileDefinition = (ContentTileDefinition) _tileDefinitionManager[currentTile];
-
+                var currentTileDefinition = _tileDefinitionManager[currentTile];
                 if (mapGrid != null)
                 {
                     var tile = mapGrid.GetTileRef(location);
-                    var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
-                    if (HasBaseTurf(currentTileDefinition, baseTurf.Name) && stack.Use(1))
+                    if (_tileDefinitionManager.GetBaseTurfId(currentTileDefinition.TileId) == tile.Tile.TypeId && stack.Use(1))
                     {
                         PlaceAt(mapGrid, location, currentTileDefinition.TileId);
                         break;
                     }
                 }
-                else if (HasBaseTurf(currentTileDefinition, "space"))
+                else if (_tileDefinitionManager.GetBaseTurfId(currentTileDefinition.TileId) == 0 && stack.Use(1))
                 {
                     mapGrid = mapManager.CreateGrid(locationMap.MapId);
                     mapGrid.WorldPosition = locationMap.Position;
@@ -88,10 +73,7 @@ namespace Content.Server.GameObjects.Components.Items
                     PlaceAt(mapGrid, location, _tileDefinitionManager[_outputTiles[0]].TileId, mapGrid.TileSize / 2f);
                     break;
                 }
-
-
             }
-
         }
     }
 }

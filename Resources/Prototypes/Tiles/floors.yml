@@ -2,8 +2,7 @@
   name: floor_dark
   display_name: Dark floor
   texture: "dark"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -14,8 +13,7 @@
   name: floor_elevator_shaft
   display_name: Elevator shaft
   texture: "elevator_shaft"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -25,8 +23,7 @@
   name: floor_freezer
   display_name: Freezer
   texture: "freezer"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -37,8 +34,7 @@
   name: floor_hydro
   display_name: Hydro floor
   texture: "hydro"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -48,8 +44,7 @@
   name: floor_green_circuit
   display_name: Green circuit floor
   texture: "green_circuit"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -60,8 +55,7 @@
   name: floor_lino
   display_name: Linoleum floor
   texture: "lino"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -72,8 +66,7 @@
   name: floor_mono
   display_name: Mono floor
   texture: "mono"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -84,8 +77,7 @@
   name: floor_reinforced
   display_name: Reinforced floor
   texture: "reinforced"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -96,8 +88,7 @@
   name: floor_rock_vault
   display_name: rock floor
   texture: "rock_vault"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -108,8 +99,7 @@
   name: floor_showroom
   display_name: Showroom floor
   texture: "showroom"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds:
@@ -120,8 +110,7 @@
   name: floor_steel
   display_name: Steel floor
   texture: "steel"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -132,8 +121,7 @@
   name: floor_steel_dirty
   display_name: Dirty steel floor
   texture: "steel_dirty"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -144,8 +132,7 @@
   name: floor_techmaint
   display_name: Techmaint Floor
   texture: "tech_maint"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -156,8 +143,7 @@
   name: floor_white
   display_name: White Floor
   texture: "white"
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor
@@ -168,8 +154,7 @@
   name: floor_asteroid_sand
   display_name: Asteroid Floor
   texture: Asteroid/asteroid_sand
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
@@ -179,8 +164,7 @@
   name: floor_asteroid_tile
   display_name: Asteroid Tile
   texture: Asteroid/asteroid_tile
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_asteroid
@@ -191,8 +175,7 @@
   name: floor_asteroid_coarse_sand0
   display_name: Asteroid Coarse Sand 0
   texture: Asteroid/asteroid_coarse_sand0
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
@@ -202,8 +185,7 @@
   name: floor_asteroid_coarse_sand1
   display_name: Asteroid Coarse Sand 1
   texture: Asteroid/asteroid_coarse_sand1
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
@@ -213,8 +195,7 @@
   name: floor_asteroid_coarse_sand2
   display_name: Asteroid Coarse Sand 2
   texture: Asteroid/asteroid_coarse_sand2
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
@@ -224,8 +205,7 @@
   name: floor_asteroid_coarse_sand_dug
   display_name: Asteroid Dug Coarse Sand
   texture: Asteroid/asteroid_coarse_sand_dug
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_asteroid
@@ -235,8 +215,7 @@
   name: floor_snow
   display_name: Snow
   texture: snow
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: false
   can_crowbar: false
   footstep_sounds: footstep_snow
@@ -246,8 +225,7 @@
   name: floor_gold
   display_name: Gold Tile
   texture: gold
-  base_turfs:
-  - plating
+  base_turf: plating
   is_subfloor: false
   can_crowbar: true
   footstep_sounds: footstep_floor

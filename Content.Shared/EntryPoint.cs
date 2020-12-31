@@ -47,6 +47,7 @@
             var spaceDef = _prototypeManager.Index<ContentTileDefinition>("space");
 
             _tileDefinitionManager.Register(spaceDef);
+            _tileDefinitionManager.SetLookUp("space");
 
             var prototypeList = new List<ContentTileDefinition>();
             foreach (var tileDef in _prototypeManager.EnumeratePrototypes<ContentTileDefinition>())
@@ -65,6 +66,11 @@
             foreach (var tileDef in prototypeList)
             {
                 _tileDefinitionManager.Register(tileDef);
+            }
+
+            foreach (var tileDef in prototypeList)
+            {
+                _tileDefinitionManager.SetLookUp(tileDef.BaseTurf);
             }
 
             _tileDefinitionManager.Initialize();

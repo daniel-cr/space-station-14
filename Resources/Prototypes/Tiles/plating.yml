@@ -2,8 +2,7 @@
   name: plating
   display_name: Plating
   texture: plating
-  base_turfs:
-  - underplating
+  base_turf: underplating
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
@@ -12,8 +11,7 @@
   name: lattice
   display_name: lattice
   texture: lattice
-  base_turfs:
-  - space
+  base_turf: space
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
@@ -23,8 +21,7 @@
   name: underplating
   display_name: Underplating
   texture: underplating
-  base_turfs:
-  - lattice
+  base_turf: lattice
   is_subfloor: true
   footstep_sounds: footstep_plating
   friction: 0.5
