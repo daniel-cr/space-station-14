@@ -5,15 +5,19 @@ using System.Linq;
 using Content.Client.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects.Components.Mobs;
 using JetBrains.Annotations;
+using Robust.Client.Graphics;
 using Robust.Client.Graphics.Drawing;
 using Robust.Client.Graphics.Overlays;
+using Robust.Client.Graphics.Shaders;
 using Robust.Client.Interfaces.Graphics.ClientEye;
 using Robust.Client.Player;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Interfaces.Map;
+using Robust.Shared.Interfaces.Random;
 using Robust.Shared.Interfaces.Timing;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.StationEvents
 {
@@ -25,6 +29,8 @@ namespace Content.Client.StationEvents
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
 
         /// <summary>
         /// Current color of a pulse
@@ -45,11 +51,13 @@ namespace Content.Client.StationEvents
         private TimeSpan _lastTick;
 
         // TODO: When worldHandle can do DrawCircle change this.
-        public override OverlaySpace Space => OverlaySpace.ScreenSpace;
+        public override OverlaySpace Space => OverlaySpace.WorldSpace;
+        private readonly ShaderInstance _shader;
 
         public RadiationPulseOverlay() : base(nameof(SharedOverlayID.RadiationPulseOverlay))
         {
             IoCManager.InjectDependencies(this);
+            _shader = _prototypeManager.Index<ShaderPrototype>("RadPulse").Instance().Duplicate();
             _lastTick = _gameTiming.CurTime;
         }
 
@@ -127,7 +135,7 @@ namespace Content.Client.StationEvents
                 .EntityQuery<RadiationPulseComponent>()
                 .ToList();
 
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = (DrawingHandleWorld) handle;
             var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
@@ -139,11 +147,15 @@ namespace Content.Client.StationEvents
                     // TODO: Check if viewport intersects circle
                     var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
 
-                    // change to worldhandle when implemented
-                    screenHandle.DrawCircle(
-                        circlePosition,
-                        pulse.Range * 64,
-                        GetColor(pulse.Owner, pulse.Decay ? elapsedTime : 0, pulse.EndTime));
+                    var f = pulse.Owner.GetComponent<Robust.Client.GameObjects.PointLightComponent>();
+
+                    _shader.SetParameter("pulse_color_g", f.Color.G);
+                    screenHandle.UseShader(_shader);
+                    //var z = pulse.Range * 64;
+                    //screenHandle.DrawTextureRect(Texture.White, UIBox2.FromDimensions(circlePosition.X - z, circlePosition.Y - z, z * 2, z * 2));
+
+                    screenHandle.DrawTextureRect(Texture.Transparent, Box2.CenteredAround(pulse.Owner.Transform.WorldPosition, new Vector2(pulse.Range, pulse.Range)));
+
                 }
             }
         }

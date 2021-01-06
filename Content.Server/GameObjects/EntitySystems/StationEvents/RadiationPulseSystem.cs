@@ -1,7 +1,9 @@
 using Content.Server.GameObjects.Components.StationEvents;
 using Content.Shared.GameObjects.Components.Body;
 using Content.Shared.Interfaces.GameObjects.Components;
+using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects.Systems;
 using Robust.Shared.Interfaces.GameObjects;
 using Robust.Shared.Map;
@@ -42,13 +44,18 @@ namespace Content.Server.GameObjects.EntitySystems.StationEvents
 
                 if (ent.Deleted) continue;
 
-                foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
+                if (ent.TryGetComponent(out PointLightComponent light))
                 {
-                    if (entity.Deleted) continue;
-
-                    foreach (var radiation in entity.GetAllComponents<IRadiationAct>())
+                    foreach (var entity in EntityManager.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range * 2.0f, true))
                     {
-                        radiation.RadiationAct(frameTime, comp);
+                        if (entity.Deleted) continue;
+                        if (light.InRangeUnOccluded(entity, range: light.Radius))
+                        {
+                            foreach (var radiation in entity.GetAllComponents<IRadiationAct>())
+                            {
+                                radiation.RadiationAct(frameTime, comp);
+                            }
+                        }
                     }
                 }
             }

@@ -4,6 +4,7 @@ using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.GameObjects.EntitySystems;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.GameObjects.Systems;
@@ -13,6 +14,7 @@ using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents
@@ -127,7 +129,16 @@ namespace Content.Server.StationEvents
                 return;
 
             var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            pulse.GetComponent<RadiationPulseComponent>().DoPulse();
+            pulse.AddComponent<PointLightComponent>();
+
+            var p = pulse.GetComponent<RadiationPulseComponent>();
+
+            var f = pulse.GetComponent<PointLightComponent>();
+            f.Radius = p.Range;
+            
+            f.Color = new Color(0.0f, 10.0f, 0.0f, 1.0f);
+            p.DoPulse();
+
             ResetTimeUntilPulse();
             _pulsesRemaining -= 1;
         }
@@ -140,10 +151,14 @@ namespace Content.Server.StationEvents
                 return false;
             }
 
-            var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
-            var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
+//            var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left/ 4, (int) mapGrid.WorldBounds.Right/4);
+//            var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom/4, (int) mapGrid.WorldBounds.Top/4);
+            
+            var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left / 2, (int) mapGrid.WorldBounds.Right / 2);
+            var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom / 2, (int) mapGrid.WorldBounds.Top / 2);
 
-            coordinates = mapGrid.ToCoordinates(randomX, randomY);
+            coordinates = mapGrid.ToCoordinates(randomX + _robustRandom.NextFloat(), randomY + _robustRandom.NextFloat());
+            //coordinates = mapGrid.ToCoordinates(0.0f, 0.0f);
 
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
             if (!coordinates.IsValid(_entityManager))
