@@ -1,4 +1,4 @@
 - type: shader
   id: RadPulse
   kind: source
-  path: "/Textures/Shaders/w.swsl"
+  path: "/Textures/Shaders/radiation_pulse.swsl"

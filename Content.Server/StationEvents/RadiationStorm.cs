@@ -130,7 +130,6 @@ namespace Content.Server.StationEvents
                 var light = pulse.AddComponent<PointLightComponent>();
                 light.Color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
                 light.Radius = radPulse.Range;
-                radPulse.Range /= 2.0f;
 
                 radPulse.DoPulse();
             }
@@ -145,8 +144,8 @@ namespace Content.Server.StationEvents
                 coordinates = default;
                 return false;
             }
-            var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left / 3, (int) mapGrid.WorldBounds.Right / 3);
-            var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom / 3, (int) mapGrid.WorldBounds.Top / 3);
+            var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
+            var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
             coordinates = mapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
 

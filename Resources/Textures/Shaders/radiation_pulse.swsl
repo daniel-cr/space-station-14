@@ -1,6 +1,6 @@
 const highp float brightness = 2.0;
 const highp float saturation = 0.5;
-
+const highp float PI = 3.1415926535;
 void fragment() {
 	if (distance(UV,vec2(0.5)) > 0.5) 
 	{
@@ -14,7 +14,6 @@ void fragment() {
 		p -= 0.5;
 		
 		highp float l = length(p);
-		highp float PI = 3.1415926535;
 		highp float B = mod(z - l, PI * 2.0);
 		
 		uv -= sin(B * B);
