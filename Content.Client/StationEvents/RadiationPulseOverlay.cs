@@ -39,7 +39,7 @@ namespace Content.Client.StationEvents
         public RadiationPulseOverlay() : base(nameof(SharedOverlayID.RadiationPulseOverlay))
         {
             IoCManager.InjectDependencies(this);
-            _shader = _prototypeManager.Index<ShaderPrototype>("RadPulse").Instance().Duplicate();
+            _shader = _prototypeManager.Index<ShaderPrototype>("RadPulse").Instance();
         }
 
         private float GetIntensity(IEntity entity, TimeSpan endTime)

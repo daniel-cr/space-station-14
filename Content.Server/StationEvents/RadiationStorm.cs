@@ -47,8 +47,8 @@ namespace Content.Server.StationEvents
 
         private int _pulsesRemaining;
         private float _timeUntilPulse;
-        private const float MinPulseDelay = 1.0f;
-        private const float MaxPulseDelay = 3.0f;
+        private const float MinPulseDelay = 0.5f;
+        private const float MaxPulseDelay = 2.0f;
 
         private void ResetTimeUntilPulse()
         {
