@@ -1,21 +1,33 @@
+const highp float brightness = 2.0;
+const highp float saturation = 0.5;
 
-highp vec4 sample_glow_pixel(sampler2D tex, highp vec2 uv) {
-    highp float hdr_threshold = 0.1; 
-	highp vec4 meh = vec4(0.0);
-    return max(textureLod(tex, uv, 2.0) - hdr_threshold, meh);
-}
+void fragment() {
+	if (distance(UV,vec2(0.5)) > 0.5) 
+	{
+		COLOR = vec4(0.0);
+	}
+	else 
+	{
+		highp float z = TIME;
+		highp vec2 uv = UV.xy;
+		highp vec2 p = uv;
+		p -= 0.5;
+		
+		highp float l = length(p);
+		highp float PI = 3.1415926535;
+		highp float B = mod(z - l, PI * 2.0);
+		
+		uv -= sin(B * B);
+		
+		highp vec4 c;
+		c.r = c.g = c.b = (length(uv - 0.5)) / 10.0;
 
-void fragment(){
-    highp vec2 ps = SCREEN_PIXEL_SIZE;
-    // Get blurred color from pixels considered glowing
-    highp vec4 col0 = sample_glow_pixel(zTexture(UV), UV + vec2(-ps.x, 0));
-    highp vec4 col1 = sample_glow_pixel(zTexture(UV), UV + vec2(ps.x, 0));
-    highp vec4 col2 = sample_glow_pixel(zTexture(UV), UV + vec2(0, -ps.y));
-    highp vec4 col3 = sample_glow_pixel(zTexture(UV), UV + vec2(0, ps.y));
+		vec4 t = c / l;
+		t.g = max(t.r, max(t.b, 0.0));
+		t.r = t.b = 0.0;
 
-    highp vec4 col = mix(zTexture(UV), UV, 0.5);
-    highp vec4 glowing_col = 0.25 * (col0 + col1 + col2 + col3);
-
-    COLOR = vec4(col.rgb + glowing_col.rgb, col.a);
-
+		t.rgb = mix(vec3(0.0), t.rgb, brightness);
+		t.rgb = mix(vec3(dot(vec3(1.0), t.rgb) * 0.33333), t.rgb, saturation);
+		COLOR = vec4(t);
+	}
 }

@@ -80,14 +80,10 @@ namespace Content.Client.StationEvents
                     if (pulse.Owner.TryGetComponent<PointLightComponent>(out var light))
                     {
                         var color = GetIntensity(pulse.Owner, pulse.EndTime) * _lightLevels;
-                        //light.Color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                         light.Color = new Color(0.0f, color, 0.0f, 1.0f);
                         worldHandle.UseShader(_shader);
                     }
                     worldHandle.DrawTextureRect(Texture.Transparent, Box2.CenteredAround(pulse.Owner.Transform.WorldPosition, new Vector2(pulse.Range, pulse.Range)));
-                    //var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
-                    //var z = pulse.Range * 64;
-                    //worldHandle.DrawTextureRect(Texture.Transparent, UIBox2.FromDimensions(circlePosition.X - z, circlePosition.Y - z, z * 2, z * 2));
                 }
             }
         }

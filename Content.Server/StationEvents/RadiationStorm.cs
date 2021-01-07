@@ -47,8 +47,8 @@ namespace Content.Server.StationEvents
 
         private int _pulsesRemaining;
         private float _timeUntilPulse;
-        private const float MinPulseDelay = 1.0f; // 0.2f;
-        private const float MaxPulseDelay = 3.0f; // 0.8f;
+        private const float MinPulseDelay = 1.0f;
+        private const float MaxPulseDelay = 3.0f;
 
         private void ResetTimeUntilPulse()
         {
@@ -148,7 +148,6 @@ namespace Content.Server.StationEvents
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left / 3, (int) mapGrid.WorldBounds.Right / 3);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom / 3, (int) mapGrid.WorldBounds.Top / 3);
 
-            // Why +0.5f? So it is centered in a tile instead of a chance of being between 4 hard/walls objects.
             coordinates = mapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
 
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
