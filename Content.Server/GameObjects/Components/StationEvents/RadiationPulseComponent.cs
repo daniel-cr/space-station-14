@@ -85,8 +85,8 @@ namespace Content.Server.GameObjects.Components.StationEvents
             serializer.DataField(this, x => x.Range, "range", 5.0f);
             serializer.DataField(this, x => x.Draw, "draw", true);
             serializer.DataField(this, x => x.Decay, "decay", true);
-            serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 2.5f);
-            serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 0.8f);
+            serializer.DataField(this, x => x.MaxPulseLifespan, "maxPulseLifespan", 7.0f); // 2.5f
+            serializer.DataField(this, x => x.MinPulseLifespan, "minPulseLifespan", 3.5f); // 0.8f
         }
 
         public void DoPulse()
@@ -106,7 +106,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseState(_radsPerSecond, _range, Draw, Decay, _endTime);
+            return new RadiationPulseState(_radsPerSecond, _range, _draw, _decay, _endTime);
         }
 
         public void Update(float frameTime)
