@@ -56,7 +56,7 @@ namespace Content.Server.StationEvents
         }
 
         public override void Startup()
-        {
+        { 
             base.Startup();
             EntitySystem.Get<AudioSystem>().PlayGlobal("/Audio/Announcements/radiation.ogg");
             IoCManager.InjectDependencies(this);
