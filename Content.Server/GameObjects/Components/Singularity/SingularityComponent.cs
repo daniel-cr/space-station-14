@@ -118,7 +118,6 @@ namespace Content.Server.GameObjects.Components.Singularity
             _audioSystem.PlayFromEntity("/Audio/Effects/singularity_form.ogg", Owner);
             Timer.Spawn(5200,() => _playingSound = _audioSystem.PlayFromEntity("/Audio/Effects/singularity.ogg", Owner, audioParams));
 
-
             if (!Owner.TryGetComponent(out _collidableComponent))
             {
                 Logger.Error("SingularityComponent was spawned without CollidableComponent");

@@ -20,6 +20,7 @@ namespace Content.Shared.GameObjects.Components
         public virtual bool Draw { get; set; }
 
         public virtual TimeSpan EndTime { get; }
+        public virtual TimeSpan StartTime { get; }
     }
 
     /// <summary>
@@ -33,14 +34,16 @@ namespace Content.Shared.GameObjects.Components
         public readonly bool Draw;
         public readonly bool Decay;
         public readonly TimeSpan EndTime;
+        public readonly TimeSpan StartTime;
 
-        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
+        public RadiationPulseState(float radsPerSecond, float range, bool draw, bool decay, TimeSpan startTime, TimeSpan endTime) : base(ContentNetIDs.RADIATION_PULSE)
         {
             RadsPerSecond = radsPerSecond;
             Range = range;
             Draw = draw;
             Decay = decay;
             EndTime = endTime;
+            StartTime = startTime;
         }
     }
 }

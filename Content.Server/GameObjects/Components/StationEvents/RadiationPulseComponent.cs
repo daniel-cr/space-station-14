@@ -22,6 +22,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
         private float _radsPerSecond;
         private float _range;
         private TimeSpan _endTime;
+        private TimeSpan _startTime;
         private bool _draw;
         private bool _decay;
 
@@ -76,6 +77,7 @@ namespace Content.Server.GameObjects.Components.StationEvents
         }
 
         public override TimeSpan EndTime => _endTime;
+        public override TimeSpan StartTime => _startTime;
 
         public override void ExposeData(ObjectSerializer serializer)
         {
@@ -93,20 +95,22 @@ namespace Content.Server.GameObjects.Components.StationEvents
         {
             if (Decay)
             {
-                var currentTime = _gameTiming.CurTime;
+                _startTime = _gameTiming.CurTime;
                 _duration = _random.NextFloat() * (MaxPulseLifespan - MinPulseLifespan) + MinPulseLifespan;
-                _endTime = currentTime + TimeSpan.FromSeconds(_duration);
+                _endTime = _startTime + TimeSpan.FromSeconds(_duration);
             }
 
-            if(!string.IsNullOrEmpty(Sound))
+            if (!string.IsNullOrEmpty(Sound))
+            {
                 EntitySystem.Get<AudioSystem>().PlayAtCoords(Sound, Owner.Transform.Coordinates);
+            }
 
             Dirty();
         }
 
         public override ComponentState GetComponentState()
         {
-            return new RadiationPulseState(_radsPerSecond, _range, _draw, _decay, _endTime);
+            return new RadiationPulseState(_radsPerSecond, _range, _draw, _decay, _startTime, _endTime);
         }
 
         public void Update(float frameTime)
@@ -114,9 +118,10 @@ namespace Content.Server.GameObjects.Components.StationEvents
             if (!Decay || Owner.Deleted)
                 return;
 
-            if(_duration <= 0f)
+            if(_duration <= 0.0f)
+            {
                 Owner.Delete();
-
+            }
             _duration -= frameTime;
         }
     }

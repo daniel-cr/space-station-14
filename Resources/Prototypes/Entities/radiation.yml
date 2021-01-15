@@ -5,3 +5,17 @@
   description: Looking at this anomaly makes you feel strange, like something is pushing at your eyes.
   components:
   - type: RadiationPulse
+  
+- type: entity
+  name: "Radiation Anomaly"
+  parent: RadiationPulse
+  id: RadiationAnomaly
+  description: If you or a loved one was diagnosed with Mesothelioma you may be entitled to financial compensation.
+  components:
+  - type: Sprite
+    sprite:  Objects/Power/light_tube.rsi
+    state: normal
+  - type: PointLight
+    enabled: true
+    radius: 5
+    energy: 1

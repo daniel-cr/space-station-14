@@ -69,7 +69,7 @@ namespace Content.Server.StationEvents
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
-                overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
+                //overlay.AddOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Content.Server.StationEvents
 
             foreach (var overlay in componentManager.EntityQuery<ServerOverlayEffectsComponent>())
             {
-                overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
+                ///overlay.RemoveOverlay(SharedOverlayID.RadiationPulseOverlay);
             }
         }
 
@@ -124,11 +124,10 @@ namespace Content.Server.StationEvents
             if (!TryFindRandomGrid(mapGrid, out var coordinates))
                 return;
 
-            var pulse = _entityManager.SpawnEntity("RadiationPulse", coordinates);
-            if (pulse.TryGetComponent(out RadiationPulseComponent radPulse))
+            var pulse = _entityManager.SpawnEntity("RadiationAnomaly", coordinates);
+            if (pulse.TryGetComponent(out RadiationPulseComponent radPulse) && pulse.TryGetComponent(out PointLightComponent light))
             {
-                var light = pulse.AddComponent<PointLightComponent>();
-                light.Color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+                light.Color = new Color(0.0f, 10.0f, 0.0f, 1.0f);
                 light.Radius = radPulse.Range;
 
                 radPulse.DoPulse();
@@ -147,7 +146,8 @@ namespace Content.Server.StationEvents
             var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
             var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
 
-            coordinates = mapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
+            coordinates = mapGrid.ToCoordinates(0.0f + 0.5f, 0.0f + 0.5f);
+            //coordinates = mapGrid.ToCoordinates(randomX + 0.5f, randomY + 0.5f);
 
             // TODO: Need to get valid tiles? (maybe just move right if the tile we chose is invalid?)
             if (!coordinates.IsValid(_entityManager))
