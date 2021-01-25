@@ -1,7 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Content.Server.GameObjects.Components.Mobs;
 using Content.Server.Interfaces.GameTicking;
-using Content.Shared.GameObjects.Components.Mobs;
 using Content.Shared.Utility;
 using Robust.Server.Interfaces.Timing;
 using Robust.Shared.Interfaces.GameObjects;
@@ -9,7 +7,6 @@ using Robust.Shared.Interfaces.Map;
 using Robust.Shared.Interfaces.Random;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
