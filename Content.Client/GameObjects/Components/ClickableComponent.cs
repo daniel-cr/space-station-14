@@ -99,7 +99,7 @@ namespace Content.Client.GameObjects.Components
 
                     var localOffset = layerPos * EyeManager.PixelsPerMeter;
 
-                    // In the case of sprites that are layered for icon
+                    // Sprite smoothing
                     localOffset *= layer.DirOffset switch
                     {
                         SpriteComponent.DirectionOffset.None => (1, -1),
